@@ -60,7 +60,8 @@ public class SneakerStoreFileManager {
                         sneaker.getPrice());
                 fileWriter.write(sneakerData);
             }
-            System.out.println("Sneaker Store inventory saved to file: " + fileName);
+            fileWriter.close();
+            System.out.println("Sneaker Store has been saved.");
         } catch (IOException e) {
             System.err.println("Error saving Sneaker Store inventory");
         }

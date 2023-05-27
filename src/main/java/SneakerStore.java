@@ -5,13 +5,12 @@ public class SneakerStore {
     private String name;
     private String phoneNumber;
     private String address;
-    private List<Sneaker> inventory;
+    private ArrayList<Sneaker> inventory = new ArrayList<>();
 
     public SneakerStore(String name, String phoneNumber, String address) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.inventory = new ArrayList<>();
     }
 
     public List<Sneaker> getSneakerByBrand(String brand) {
@@ -71,7 +70,7 @@ public class SneakerStore {
     }
 
     public List<Sneaker> allSneakers(){
-        return new ArrayList<>();
+        return new ArrayList<>(inventory);
     }
 
 

@@ -24,7 +24,8 @@ public class UserInterface {
                      [3] View Sneakers By Material Type
                      [4] Search Sneakers By Name
                      [5] Search Sneakers Within Price Range
-                     [6] Add a New Sneaker
+                     [6] Add A New Sneaker
+                     [7] Remove A Sneaker
                      [99] Exit 
                     """);
             int choice = userInput.nextInt();
@@ -47,6 +48,10 @@ public class UserInterface {
                     break;
                 case 6:
                     addSneaker();
+                    break;
+                case 7:
+                    removeSneaker();
+                    break;
                 case 99:
                     exit = true;
                     System.out.println("Exiting Dealership Menu...");
@@ -110,7 +115,6 @@ public class UserInterface {
     }
 
 
-
     public void getByPriceRequest() {
         System.out.print("Please enter the minimum price of Sneakers: ");
         double minPrice = userInput.nextDouble();
@@ -121,7 +125,7 @@ public class UserInterface {
         displaySneakers(sneakersByPrice);
     }
 
-    public void addSneaker(){
+    public void addSneaker() {
         System.out.print("Please enter the Serial Number of the new Sneaker:  ");
         int serialNumber = Integer.parseInt(userInput.nextLine());
         System.out.print("Please enter the Brand of the new Sneaker:    ");
@@ -141,6 +145,24 @@ public class UserInterface {
         fileManager.saveSneakerStore(sneakerStore);
     }
 
+    public void removeSneaker() {
+        Sneaker sneakerToBeRemoved = null;
+        System.out.print("Please enter the Serial Number:   ");
+        int serialNumber = userInput.nextInt();
+        for (Sneaker sneaker : sneakerStore.allSneakers()) {
+            if (sneaker.getSerialNumber() == serialNumber) {
+                System.out.println("Sneaker has been removed.");
+                sneakerToBeRemoved = sneaker;
+                break;
+            }
+        }
+        sneakerStore.removeSneaker(sneakerToBeRemoved);
+        fileManager.saveSneakerStore(sneakerStore);
+    }
+
+
 }
+
+
 
 
