@@ -69,7 +69,10 @@ public class SneakerStore {
         return result;
     }
 
-    public List<Sneaker> allSneakers(){
+
+
+
+    public List<Sneaker> getAllSneakers(){
         return new ArrayList<>(inventory);
     }
 

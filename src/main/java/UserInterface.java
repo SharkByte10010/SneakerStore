@@ -4,11 +4,17 @@ import java.util.Scanner;
 public class UserInterface {
 
     private SneakerStoreFileManager fileManager;
+
+    private HatFileManager hatFileManager;
     private SneakerStore sneakerStore;
 
+    private FittedHatSection fittedHats;
+
     private void init() {
-        fileManager = new SneakerStoreFileManager("sneakerinventory.csv");
+        fileManager = new SneakerStoreFileManager("sneakerinventory1.csv");
+        hatFileManager = new HatFileManager("fittedhats.csv");
         sneakerStore = fileManager.getSneakerStore();
+        fittedHats = hatFileManager.getFittedHatSection();
     }
 
     public static Scanner userInput = new Scanner(System.in);
@@ -19,48 +25,60 @@ public class UserInterface {
         while (!exit) {
             System.out.println("""
                      Main Menu
-                     [1] View Sneakers By Brands
-                     [2] View Sneakers By Colors
-                     [3] View Sneakers By Material Type
-                     [4] Search Sneakers By Name
-                     [5] Search Sneakers Within Price Range
-                     [6] Add A New Sneaker
-                     [7] Remove A Sneaker
+                     [1] View Sneaker Collection 
+                     [2] View Sneakers By Brands
+                     [3] View Sneakers By Colors
+                     [4] View Sneakers By Material Type
+                     [5] Search Sneakers By Name
+                     [6] Search Sneakers Within Price Range
+                     [7] Add A New Sneaker
+                     [8] Remove A Sneaker
+                     [9] View Hat Section
+                     [10] Buy
                      [99] Exit 
                     """);
             int choice = userInput.nextInt();
             userInput.nextLine(); // Consume the newline character
             switch (choice) {
                 case 1:
+                    getAllSneakersRequest();
+                case 2:
                     getByBrandRequest();
                     break;
-                case 2:
+                case 3:
                     getByColorRequest();
                     break;
-                case 3:
+                case 4:
                     getByMaterialRequest();
                     break;
-                case 4:
+                case 5:
                     getByNameRequest();
                     break;
-                case 5:
+                case 6:
                     getByPriceRequest();
                     break;
-                case 6:
+                case 7:
                     addSneaker();
                     break;
-                case 7:
+                case 8:
                     removeSneaker();
                     break;
+                case 9:
+                    goToHatSection();
                 case 99:
                     exit = true;
-                    System.out.println("Exiting Dealership Menu...");
+                    System.out.println("Exiting Imperial Kicks...");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
                     break;
             }
         }
+    }
+
+    public void goToHatSection() {
+        HatSectionUI hatSectionUI = new HatSectionUI(fittedHats);
+        hatSectionUI.display();
     }
 
     public void displaySneakers(ArrayList<Sneaker> inventory) {
@@ -149,7 +167,7 @@ public class UserInterface {
         Sneaker sneakerToBeRemoved = null;
         System.out.print("Please enter the Serial Number:   ");
         int serialNumber = userInput.nextInt();
-        for (Sneaker sneaker : sneakerStore.allSneakers()) {
+        for (Sneaker sneaker : sneakerStore.getAllSneakers()) {
             if (sneaker.getSerialNumber() == serialNumber) {
                 System.out.println("Sneaker has been removed.");
                 sneakerToBeRemoved = sneaker;
@@ -160,7 +178,11 @@ public class UserInterface {
         fileManager.saveSneakerStore(sneakerStore);
     }
 
-
+    public void getAllSneakersRequest(){
+        System.out.println(" Our Collection Of Sneakers");
+        ArrayList aList = (ArrayList) sneakerStore.getAllSneakers();
+        displaySneakers(aList);
+    }
 }
 
 

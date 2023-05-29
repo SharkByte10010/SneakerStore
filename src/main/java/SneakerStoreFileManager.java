@@ -43,14 +43,12 @@ public class SneakerStoreFileManager {
             System.err.println("File not found");
         }
             return sneakerStore;
-
-
     }
 
     public void saveSneakerStore(SneakerStore sneakerStore) {
         try (FileWriter fileWriter = new FileWriter(fileName)) {
             fileWriter.write("SerialNumber|Brand|Material|Color|Name|Price\n");
-            for (Sneaker sneaker : sneakerStore.allSneakers()) {
+            for (Sneaker sneaker : sneakerStore.getAllSneakers()) {
                 String sneakerData = String.format("%d|%s|%s|%s|%s|%.2f%n",
                         sneaker.getSerialNumber(),
                         sneaker.getBrand(),
@@ -66,6 +64,5 @@ public class SneakerStoreFileManager {
             System.err.println("Error saving Sneaker Store inventory");
         }
     }
-
 
 }
